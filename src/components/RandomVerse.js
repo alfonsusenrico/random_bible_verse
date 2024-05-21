@@ -529,12 +529,13 @@ const RandomVerse = () => {
   };
 
   useEffect(() => {
+    document.title = "Random Bible Verse";
     fetchVerse();
   }, []);
 
   return (
     <VerseContainer>
-      <h1>Joy Bible Verse</h1>
+      <h1>Bible Verse</h1>
       {loading ? <p></p> : <VerseInfo>{verse_id_info}</VerseInfo>}
       {loading ? <p>Loading...</p> : <VerseText>{verse_eng}</VerseText>}
       {loading ? <p></p> : <VerseInfo>{verse_eng_info}</VerseInfo>}
