@@ -466,14 +466,13 @@ const RandomVerse = () => {
     try {
       //X2JS Lib For Convert XML to JSON
       var x2js = new X2JS();
-      // var text = '';
 
+      //Get Random Verse data from Bible-api's API
       var get = await axios.get('https://cors-anywhere.herokuapp.com/https://bible-api.com/?random=verse');
-      // var get = await axios.get('https://bible-api.com/?random=verse');
-      
       var data = get.data.verses[0];
       // console.log("data: ", data);
 
+      //Assign Book, Chapter, and Verse
       const book_name = data.book_name;
       const chapter = data.chapter;
       const verse = data.verse;
@@ -488,9 +487,8 @@ const RandomVerse = () => {
       const found = verseList.find((book) => book.Nama_eng == book_name);
       const book_id = found.Nama_id;
  
+      //Get Verse data from Alkitab Sabda's API
       get = await axios.get('https://cors-anywhere.herokuapp.com/https://alkitab.sabda.org/api/passage.php?passage=' + book_id + '%20' + chapter + ':' + verse);
-      // get = await axios.get('https://alkitab.sabda.org/api/passage.php?passage=' + book_id + '%20' + chapter + ':' + verse);
-      
       data = x2js.xml2js(get.data);
       // console.log("data: ", data.bible.book.chapter.verses.verse.text);
       
@@ -521,7 +519,7 @@ const RandomVerse = () => {
       //console.log(verse);
       setVerseIdInfo(found.Nama + " " + chapter + ":" + verse);
       setVerseEngInfo(found.Nama_eng + " " + chapter + ":" + verse);
-      setVerseId(verse_id); // Pastikan response sesuai dengan API yang digunakan
+      setVerseId(verse_id);
       setVerseEng(verse_eng);
     } catch (error) {
       console.error('Error fetching the verse:', error);
