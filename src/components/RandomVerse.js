@@ -468,8 +468,8 @@ const RandomVerse = () => {
       var x2js = new X2JS();
       // var text = '';
 
-      // var get = await axios.get('https://cors-anywhere.herokuapp.com/https://bible-api.com/?random=verse');
-      var get = await axios.get('https://bible-api.com/?random=verse');
+      var get = await axios.get('https://cors-anywhere.herokuapp.com/https://bible-api.com/?random=verse');
+      // var get = await axios.get('https://bible-api.com/?random=verse');
       
       var data = get.data.verses[0];
       // console.log("data: ", data);
@@ -488,8 +488,8 @@ const RandomVerse = () => {
       const found = verseList.find((book) => book.Nama_eng == book_name);
       const book_id = found.Nama_id;
  
-      // get = await axios.get('https://cors-anywhere.herokuapp.com/https://alkitab.sabda.org/api/passage.php?passage=' + book_id + '%20' + chapter + ':' + verse);
-      get = await axios.get('https://alkitab.sabda.org/api/passage.php?passage=' + book_id + '%20' + chapter + ':' + verse);
+      get = await axios.get('https://cors-anywhere.herokuapp.com/https://alkitab.sabda.org/api/passage.php?passage=' + book_id + '%20' + chapter + ':' + verse);
+      // get = await axios.get('https://alkitab.sabda.org/api/passage.php?passage=' + book_id + '%20' + chapter + ':' + verse);
       
       data = x2js.xml2js(get.data);
       // console.log("data: ", data.bible.book.chapter.verses.verse.text);
