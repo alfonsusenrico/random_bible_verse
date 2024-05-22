@@ -1,8 +1,9 @@
 // src/components/RandomVerse.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
 import X2JS from 'x2js';
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 const VerseContainer = styled.div`
   display: flex;
@@ -12,17 +13,16 @@ const VerseContainer = styled.div`
   height: 100vh;
   padding: 20px;
   text-align: center;
-  background: #f7fafc;
-  color: #333;
-  font-family: 'Arial', sans-serif;
+  position: relative;
+  z-index: 1;
 `;
 
-const VerseText = styled.p`
+const VerseText = styled(motion.p)`
   font-size: 1.5em;
   margin-bottom: 20px;
 `;
 
-const VerseInfo = styled.p`
+const VerseInfo = styled(motion.p)`
   font-size: 1.7em;
   font-weight: bold;
 `;
@@ -48,6 +48,7 @@ const RandomVerse = () => {
   const [verse_id_info, setVerseIdInfo] = useState('');
   const [verse_eng_info, setVerseEngInfo] = useState('');
   const [loading, setLoading] = useState(true);
+  const isMounted = useRef(false);
 
   const verseList = [
     //PERJANJIAN LAMA
@@ -530,16 +531,19 @@ const RandomVerse = () => {
 
   useEffect(() => {
     document.title = "Random Bible Verse";
-    fetchVerse();
+    if (!isMounted.current) {
+      isMounted.current = true;
+      fetchVerse();
+    }
   }, []);
 
   return (
     <VerseContainer>
-      <h1>Bible Verse</h1>
-      {loading ? <p></p> : <VerseInfo>{verse_id_info}</VerseInfo>}
-      {loading ? <p>Loading...</p> : <VerseText>{verse_eng}</VerseText>}
-      {loading ? <p></p> : <VerseInfo>{verse_eng_info}</VerseInfo>}
-      {loading ? <p></p> : <VerseText>{verse_id}</VerseText> }
+      <h1>Daily Bible Verse</h1>
+      {loading ? <p></p> : <VerseInfo initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}> {verse_id_info} </VerseInfo>}
+      {loading ? <p>Loading...</p> : <VerseText initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}> {verse_eng} </VerseText>}
+      {loading ? <p></p> : <VerseInfo initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>{verse_eng_info}</VerseInfo>}
+      {loading ? <p></p> : <VerseText initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>{verse_id}</VerseText> }
       {/* <Button onClick={fetchVerse}>Get Another Verse</Button> */}
     </VerseContainer>
   );
